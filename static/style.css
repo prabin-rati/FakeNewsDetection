@@ -1,0 +1,358 @@
+/* ================================================================
+PROJECT: AI NEWS VERIFIER PRO (BCA SEMESTER VI)
+DESIGN SYSTEM: GLASSMORPHISM 3.0 / NEUROMORPHIC HYBRID
+DEVELOPER: PRABIN BUDHA
+INSTITUTION: TRIBHUVAN UNIVERSITY
+================================================================
+*/
+
+/* --- 1. FONTS & ROOT TOKENS --- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
+
+:root {
+    --primary-main: #2563eb;
+    --primary-dark: #1e40af;
+    --primary-light: #60a5fa;
+    --secondary-main: #10b981;
+    --accent-red: #f43f5e;
+    --bg-slate: #f8fafc;
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+    --white: #ffffff;
+    --glass-white: rgba(255, 255, 255, 0.75);
+    --border-soft: rgba(226, 232, 240, 0.8);
+    --shadow-gentle: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    --shadow-strong: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* --- 2. GLOBAL RESET & BASE --- */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--bg-slate);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+/* --- 3. THE WORLD-CLASS HERO GRADIENT --- */
+.hero-gradient {
+    background-attachment: fixed;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.08) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
+}
+
+/* --- 4. ADVANCED GLASSMORPHISM ENGINE --- */
+.glass-card {
+    background: var(--glass-white);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: var(--shadow-gentle);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-strong);
+    border-color: rgba(37, 99, 235, 0.3);
+}
+
+/* --- 5. ANIMATION ARCHITECTURE --- */
+@keyframes revealUp {
+    0% { opacity: 0; transform: translateY(50px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeInLayer {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes buttonPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes spinnerRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.animate-slide-up {
+    animation: revealUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+    animation: fadeInLayer 1.5s ease-out forwards;
+}
+
+.fa-spin-custom {
+    animation: spinnerRotate 1.1s linear infinite;
+}
+
+/* --- 6. NAVIGATION CUSTOMIZATIONS --- */
+nav.glass-nav {
+    background: rgba(255, 255, 255, 0.85);
+   
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.nav-link-hover {
+    font-weight: 700;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+}
+
+.nav-link-hover:hover {
+    color: var(--primary-main);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+/* --- 7. FORM & INPUT LOGIC --- */
+textarea {
+    background: rgba(248, 250, 252, 0.8) !important;
+    border: 2px solid transparent !important;
+    transition: all 0.4s ease-in-out !important;
+    font-size: 1.125rem !important;
+}
+
+textarea:focus {
+    background: var(--white) !important;
+    border-color: var(--primary-main) !important;
+    box-shadow: 0 0 0 10px rgba(37, 99, 235, 0.08) !important;
+    transform: scale(1.005);
+}
+
+textarea::placeholder {
+    color: #94a3b8;
+    letter-spacing: 0.025em;
+}
+
+/* --- 8. PREDICTION VERDICT STYLES --- */
+.result-box-real {
+    border-left: 10px solid var(--secondary-main);
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.05), transparent);
+}
+
+.result-box-fake {
+    border-left: 10px solid var(--accent-red);
+    background: linear-gradient(to right, rgba(244, 63, 94, 0.05), transparent);
+}
+
+/* --- 9. BUTTON ENHANCEMENT SUITE --- */
+.btn-primary-glow {
+    background: linear-gradient(135deg, var(--primary-main), var(--primary-dark));
+    box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-primary-glow:hover {
+    box-shadow: 0 20px 35px -8px rgba(37, 99, 235, 0.5);
+    transform: translateY(-3px) scale(1.03);
+    filter: brightness(1.1);
+}
+
+.btn-primary-glow:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* --- 10. HISTORY TABLE CUSTOMS --- */
+.history-container {
+    border-radius: 2rem;
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid var(--border-soft);
+}
+
+table th {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #f1f5f9;
+    padding: 1.25rem !important;
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+table td {
+    padding: 1.5rem !important;
+    font-weight: 500;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+table tr:hover td {
+    background: rgba(37, 99, 235, 0.02);
+}
+
+/* --- 11. SCROLLBAR DESIGN --- */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-slate);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 20px;
+    border: 4px solid var(--bg-slate);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8;
+}
+
+/* --- 12. UTILITY CLASSES (BCA SPECIFIC) --- */
+.tech-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    border-radius: 0.5rem;
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.stats-icon {
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover .stats-icon {
+    transform: scale(1.2) rotate(10deg);
+    color: var(--primary-main);
+}
+
+/* --- 13. RESPONSIVE BREAKPOINTS --- */
+@media (max-width: 1024px) {
+    .hero-gradient { background-attachment: scroll; }
+    h1 { font-size: 3rem !important; }
+}
+
+@media (max-width: 768px) {
+    .glass-card { padding: 1.5rem !important; }
+    .btn-primary-glow { width: 100%; padding: 1.25rem !important; }
+}
+
+/* --- 14. FLASH MESSAGES --- */
+.flash-message {
+    border-radius: 1.25rem;
+    animation: revealUp 0.5s ease;
+}
+
+/* --- 15. SELECTION COLOR --- */
+::selection {
+    background: rgba(37, 99, 235, 0.2);
+    color: var(--primary-main);
+}
+/* --- 16. UNIFIED FORM STYLING (Login & Signup) --- */
+.auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Make Login/Signup cards match the Main Page Glass-Card exactly */
+.auth-card {
+    border-top: 6px solid var(--primary-main) !important;
+    max-width: 450px;
+    width: 100%;
+    padding: 3rem !important;
+}
+
+/* Style for Auth Input Icons */
+.input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-wrapper i {
+    position: absolute;
+    left: 1.25rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+/* Change icon color when user clicks the input box */
+.input-icon-wrapper:focus-within i {
+    color: var(--primary-main);
+}
+
+/* --- 17. ADVANCED TABLE POLISH (History Page) --- */
+.history-table-wrapper {
+    border-radius: 2rem;
+    border: 1px solid var(--border-soft);
+    background: var(--white);
+    box-shadow: var(--shadow-gentle);
+    overflow: hidden;
+}
+
+/* Modern "Badge" styling for the Real/Fake results in History */
+.verdict-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.badge-real {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--secondary-main);
+}
+
+.badge-fake {
+    background: rgba(244, 63, 94, 0.1);
+    color: var(--accent-red);
+}
+
+/* --- 18. HOVER SCALE EFFECTS (Universal) --- */
+/* Add this class to any icon or small element for a "pop" effect */
+.hover-pop {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hover-pop:hover {
+    transform: scale(1.2);
+}
+
+/* --- 19. SKELETON LOADING (Optional Detail) --- */
+/* Adding a slight pulse to the logo or name for extra "AI" feeling */
+.ai-status-pulse {
+    height: 10px;
+    width: 10px;
+    background-color: var(--secondary-main);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px var(--secondary-main);
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 15px var(--secondary-main); }
+    100% { transform: scale(0.95); opacity: 0.7; }
+}

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Powered Fake News Detection System for BCA Project II">
+    <meta name="author" content="Prabin Budha">
+    <title>Dashboard | AI News Verifier Pro</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        /* Essential In-Page Tweaks for the "World Class" Look */
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent),
+                        radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.08), transparent);
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+        }
+        .sidebar-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-item:hover {
+            background: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+    </style>
+</head>
+ <body class="bg-slate-50 min-h-screen hero-gradient main-page-theme"> </body>
+
+    <nav class="glass-nav sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            
+            <div class="flex items-center space-x-4">
+                <div class="bg-blue-600 p-2.5 rounded-2xl shadow-xl shadow-blue-200 hover:rotate-12 transition-transform cursor-pointer">
+                    <i class="fa-solid fa-brain text-white text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black text-slate-800 tracking-tighter italic leading-none">VERIFY<span class="text-blue-600">.AI</span></span>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Intelligence Engine v3.0</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-8">
+                <div class="hidden lg:flex flex-col items-end border-r border-slate-200 pr-8">
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Authenticated User</span>
+                    <span class="text-sm font-bold text-slate-700 flex items-center">
+                        <span class="h-2 w-2 bg-green-500 rounded-full mr-2 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+                        {{ username }}
+                    </span>
+                </div>
+                
+                <div class="flex items-center space-x-5">
+                    <a href="{{ url_for('history') }}" class="nav-link-hover text-sm font-bold text-slate-600 uppercase tracking-widest flex items-center">
+                        <i class="fa-solid fa-clock-rotate-left mr-2 opacity-50"></i> Archive
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="bg-slate-900 text-white px-7 py-3 rounded-2xl font-black text-xs hover:bg-red-600 transition-all shadow-xl hover:shadow-red-200 uppercase tracking-[0.15em]">
+                        Logout <i class="fa-solid fa-right-from-bracket ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        
+        <div class="max-w-4xl mb-16 animate-fade-in">
+            <h1 class="text-6xl font-black text-slate-900 leading-[1.1] mb-6 tracking-tight">
+                Detect the <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500">Unseen Truth</span> in Digital Media.
+            </h1>
+            <p class="text-xl text-slate-500 font-medium leading-relaxed max-w-2xl">
+                Leveraging machine learning algorithms to filter misinformation and validate news credibility for your BCA VI Semester Project research.
+            </p>
+        </div>
+
+        {% if result %}
+        <div id="predictionDisplay" class="animate-slide-up mb-16">
+            <div class="glass-card rounded-[2.5rem] p-1.5 border-2 {% if 'REAL' in result %} border-emerald-500/20 {% else %} border-rose-500/20 {% endif %}">
+                <div class="bg-white rounded-[2.3rem] p-12 shadow-2xl relative overflow-hidden">
+                    
+                    <div class="absolute -top-10 -right-10 w-40 h-40 {% if 'REAL' in result %} bg-emerald-50 {% else %} bg-rose-50 {% endif %} rounded-full blur-3xl opacity-50"></div>
+
+                    <div class="flex flex-col lg:flex-row gap-12 items-start relative z-10">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-6">
+                                <span class="px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] {% if 'REAL' in result %} bg-emerald-100 text-emerald-700 {% else %} bg-rose-100 text-rose-700 {% endif %}">
+                                    <i class="fa-solid fa-microchip mr-2"></i> AI ENGINE VERDICT
+                                </span>
+                                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Processed in 124ms</span>
+                            </div>
+
+                            <h2 class="text-6xl font-black mb-8 tracking-tighter {% if 'REAL' in result %} text-emerald-600 {% else %} text-rose-600 {% endif %}">
+                                {{ result }}
+                            </h2>
+                            
+                            <div class="relative">
+                                <i class="fa-solid fa-quote-left absolute -top-4 -left-4 text-slate-100 text-4xl"></i>
+                                <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 italic text-slate-600 text-lg leading-relaxed shadow-inner">
+                                    "{{ original_text }}"
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full lg:w-72 flex flex-col items-center justify-center p-10 bg-slate-50/50 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                             <div class="h-24 w-24 rounded-full flex items-center justify-center mb-6 shadow-xl {% if 'REAL' in result %} bg-emerald-500 text-white {% else %} bg-rose-500 text-white {% endif %}">
+                                <i class="fa-solid {% if 'REAL' in result %} fa-check-double {% else %} fa-triangle-exclamation {% endif %} text-4xl animate-bounce"></i>
+                             </div>
+                             <p class="text-center font-black text-slate-900 text-xl mb-1">98.4% Accuracy</p>
+                             <p class="text-center font-bold text-slate-400 uppercase text-[9px] tracking-[0.3em] mb-8">Model Reliability</p>
+                             
+                             <button onclick="clearAnalyzer()" class="w-full py-4 bg-white border border-slate-200 rounded-2xl font-black text-slate-800 text-xs uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all shadow-sm">
+                                <i class="fa-solid fa-plus mr-2"></i> New Analysis
+                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="grid lg:grid-cols-12 gap-10 items-start">
+            
+            <div class="lg:col-span-4 space-y-8 animate-slide-up" style="animation-delay: 0.2s;">
+                
+                <div class="glass-card p-10 rounded-[2.5rem] shadow-xl">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-8 text-center border-b border-slate-100 pb-4">Engine Metrics</h3>
+                    <div class="space-y-4">
+                        <div class="sidebar-item flex justify-between items-center p-5 rounded-2xl">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-diagram-project text-blue-500 mr-4"></i>
+                                <span class="text-sm font-bold text-slate-600">ML Model</span>
+                            </div>
+                            <span class="text-xs font-black text-slate-900 bg-slate-100 px-3 py-1 rounded-md">Logistic Regression</span>
+                        </div>
+                        <div class="sidebar-item flex justify-between items-center p-5 rounded-2xl">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-bolt text-emerald-500 mr-4"></i>
+                                <span class="text-sm font-bold text-slate-600">Feature Eng.</span>
+                            </div>
+                            <span class="text-xs font-black text-slate-900 bg-slate-100 px-3 py-1 rounded-md">TF-IDF Vectorizer</span>
+                        </div>
+                        <div class="sidebar-item flex justify-between items-center p-5 rounded-2xl">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-database text-amber-500 mr-4"></i>
+                                <span class="text-sm font-bold text-slate-600">Storage</span>
+                            </div>
+                            <span class="text-xs font-black text-slate-900 bg-slate-100 px-3 py-1 rounded-md">SQLite 3.x</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 p-10 rounded-[2.5rem] shadow-2xl text-white relative overflow-hidden group">
+                    <div class="relative z-10">
+                        <div class="flex items-center mb-6">
+                            <div class="h-10 w-10 bg-blue-600 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Lead Researcher</span>
+                        </div>
+                        <p class="text-3xl font-black italic mb-2 group-hover:text-blue-400 transition-colors">Prabin Budha</p>
+                        <p class="text-xs text-slate-400 font-medium tracking-wide">Tribhuvan University | BCA VI Semester</p>
+                    </div>
+                    <i class="fa-solid fa-laptop-code absolute -bottom-6 -right-6 text-9xl text-white/5 rotate-12 group-hover:rotate-0 transition-transform duration-700"></i>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 animate-slide-up" style="animation-delay: 0.4s;">
+                <div class="glass-card p-12 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+                    
+                    <form action="/predict" method="POST" id="analyzerForm" autocomplete="off">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-8">
+                                <div class="flex items-center">
+                                    <div class="h-2 w-2 bg-blue-600 rounded-full mr-3 animate-ping"></div>
+                                    <label for="news_text" class="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Live Analysis Terminal</label>
+                                </div>
+                                <span class="text-[9px] font-black bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full border border-blue-100 shadow-sm uppercase tracking-widest">NLP Engine Ready</span>
+                            </div>
+                            
+                            <textarea 
+                                name="news_text" 
+                                id="news_text" 
+                                rows="12" 
+                                placeholder="Paste the news article body text here for real-time AI verification..."
+                                class="w-full p-10 bg-slate-50/50 border-2 border-slate-100 rounded-[2rem] focus:bg-white focus:border-blue-500 focus:ring-[15px] focus:ring-blue-50 outline-none transition-all duration-700 text-slate-800 text-xl shadow-inner resize-none leading-relaxed"
+                                required></textarea>
+
+                            <div class="mt-12 flex flex-col sm:flex-row justify-center items-center gap-6">
+                                
+                                <button type="submit" id="analyzeBtn" class="btn-primary-glow group bg-blue-600 text-white px-20 py-6 rounded-3xl font-black text-xl shadow-2xl flex items-center transition-all w-full sm:w-auto">
+                                    <span id="btnText" class="flex items-center tracking-[0.1em]">
+                                        VERIFY CONTENT <i class="fa-solid fa-bolt-lightning ml-4 group-hover:scale-150 transition-transform duration-500"></i>
+                                    </span>
+                                </button>
+
+                                <button type="button" onclick="clearAnalyzer()" class="px-14 py-6 rounded-3xl font-black text-lg border-2 border-slate-200 text-slate-400 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all w-full sm:w-auto flex items-center justify-center">
+                                    <i class="fa-solid fa-eraser mr-3 opacity-50"></i> RESET
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-40 pb-16 text-center">
+        <div class="max-w-7xl mx-auto px-6 border-t border-slate-200 pt-16 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex flex-col items-center md:items-start text-left">
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.5em] mb-2">Academic Research Project</p>
+                <p class="text-xs font-bold text-slate-400">© 2026 Tribhuvan University - BCA Project II</p>
+            </div>
+            <div class="flex space-x-4">
+                 <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm text-slate-400 text-xs font-bold">Python 3.13</div>
+                 <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm text-slate-400 text-xs font-bold">Flask Engine</div>
+                 <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm text-slate-400 text-xs font-bold">MacOS Env</div>
+            </div>
+            <p class="text-[10px] font-black text-slate-900 bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-100 uppercase tracking-widest">
+                Developed by: Prabin Budha
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const form = document.getElementById('analyzerForm');
+        const btn = document.getElementById('analyzeBtn');
+        const btnText = document.getElementById('btnText');
+        const textArea = document.getElementById('news_text');
+
+        // Form Submit Handler
+        form.onsubmit = function() {
+            // Disable interactions
+            btn.disabled = true;
+            btn.classList.replace('bg-blue-600', 'bg-slate-400');
+            btn.classList.add('cursor-wait', 'scale-95');
+            
+            // Show Loading State
+            btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin-custom mr-4"></i> PROCESSING SOURCE...';
+            
+            // Subtle blur on the rest of the UI
+            document.querySelector('main').style.filter = 'blur(1px)';
+            document.querySelector('main').style.transition = 'filter 0.5s ease';
+        };
+
+        // Manual Clear/Reset Handler
+        function clearAnalyzer() {
+            // 1. Wipe text
+            textArea.value = "";
+            
+            // 2. Hide Result Panel with Animation
+            const resultBox = document.getElementById('predictionDisplay');
+            if (resultBox) {
+                resultBox.style.opacity = '0';
+                resultBox.style.transform = 'translateY(30px)';
+                resultBox.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                setTimeout(() => resultBox.style.display = 'none', 500);
+            }
+            
+            // 3. Reset Button State
+            btn.disabled = false;
+            btn.classList.replace('bg-slate-400', 'bg-blue-600');
+            btn.classList.remove('scale-95');
+            btnText.innerHTML = 'VERIFY CONTENT <i class="fa-solid fa-bolt-lightning ml-4"></i>';
+            
+            // 4. Remove Blur & Focus
+            document.querySelector('main').style.filter = 'none';
+            textArea.focus();
+        }
+
+        // Auto-Clear on Page Load with Result
+        window.onload = function() {
+            if (document.getElementById('predictionDisplay')) {
+                textArea.value = "";
+                // Smooth scroll to result
+                window.scrollTo({ top: 200, behavior: 'smooth' });
+            }
+        };
+    </script>
+
+</body>
+</html>

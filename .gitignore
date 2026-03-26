@@ -1,0 +1,13 @@
+# Mac system files
+.DS_Store
+
+# Python environment
+venv/
+__pycache__/
+*.py[cod]
+
+# Saved Models
+models/*.pkl
+
+# Large datasets
+data/*.csv

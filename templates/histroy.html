@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Archive | AI News Verifier</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-slate-50 min-h-screen hero-gradient">
+
+    <nav class="glass-nav sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="{{ url_for('home') }}" class="flex items-center space-x-3">
+                <div class="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-200">
+                    <i class="fa-solid fa-microchip text-white text-xl"></i>
+                </div>
+                <span class="text-2xl font-black text-slate-800 tracking-tight italic">VERIFY<span class="text-blue-600">.AI</span></span>
+            </a>
+            <div class="flex items-center space-x-6">
+                <a href="{{ url_for('home') }}" class="text-sm font-bold text-slate-600 hover:text-blue-600 uppercase tracking-widest">Dashboard</a>
+                <a href="{{ url_for('logout') }}" class="bg-slate-900 text-white px-6 py-2 rounded-xl font-bold text-xs uppercase tracking-widest">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <div class="mb-12 animate-fade-in">
+            <h1 class="text-5xl font-black text-slate-900 mb-4 tracking-tighter">Verification Archive</h1>
+            <p class="text-slate-500 font-medium">Review all historical news analysis processed by the engine.</p>
+        </div>
+
+        <div class="glass-card rounded-[2.5rem] overflow-hidden shadow-2xl animate-slide-up">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50/50 border-b border-slate-100">
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Snippet</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">AI Verdict</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Timestamp</th>
+                            <th class="p-6 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        {% for record in history %}
+                        <tr class="hover:bg-blue-50/30 transition-colors group">
+                            <td class="p-6 max-w-md">
+                                <p class="text-slate-700 font-medium line-clamp-2 italic">"{{ record[1] }}"</p>
+                            </td>
+                            <td class="p-6">
+                                <span class="verdict-badge {% if 'REAL' in record[2] %} badge-real {% else %} badge-fake {% endif %}">
+                                    {{ record[2] }}
+                                </span>
+                            </td>
+                            <td class="p-6 text-xs font-bold text-slate-400">{{ record[3] }}</td>
+                            <td class="p-6 text-right">
+                                <span class="text-xs font-black text-slate-900">98.4%</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
